@@ -1,29 +1,31 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html>
 <head>
     <title>Cadastro de Usuário</title>
 </head>
 <body>
     <h1>Cadastro de Usuário</h1>
-    <form action="/cadastrar" method="POST">
+    <form action="/register" method="POST">
         <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required>
+        <input type="text" id="nome" name="name" required>
         <br><br>
         <label for="senha">Senha:</label>
-        <input type="password" id="senha" name="senha" required>
+        <input type="password" id="senha" name="passw" required>
         <br><br>
         <input type="submit" value="Cadastrar">
     </form>
 
   <h1>Verificação de Usuário</h1>
-    <form action="/verificar" method="POST">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required>
-        <br><br>
-        <label for="senha">Senha:</label>
-        <input type="password" id="senha" name="senha" required>
-        <br><br>
-        <input type="submit" value="Verificar">
-    </form>
+<form action="/verify" method="POST">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="name" required>
+    <br><br>
+    <label for="senha">Senha:</label>
+    <input type="password" id="senha" name="passw" required>
+    <br><br>
+    <input type="submit" value="Verificar">
+</form>
+
 </body>
 </html>

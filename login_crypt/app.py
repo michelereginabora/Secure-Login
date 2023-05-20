@@ -5,15 +5,15 @@ import bcrypt
 app = Flask(__name__)
 
 
-def criar_tabela():
-    conn = sqlite3.connect('cadastro.db')
+def create_table():
+    conn = sqlite3.connect('register.db')
     cursor = conn.cursor()
 
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS usuarios (
+        CREATE TABLE IF NOT EXISTS user (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome TEXT,
-            senha TEXT
+            name TEXT,
+            passw TEXT
         )
     ''')
 
@@ -21,39 +21,39 @@ def criar_tabela():
     conn.close()
 
 
-def gerar_hash_senha(senha):
+def create_password_hash(passw):
     salt = bcrypt.gensalt()
-    hash_senha = bcrypt.hashpw(senha.encode('utf-8'), salt)
-    return hash_senha.decode('utf-8')
+    hash_passw = bcrypt.hashpw(passw.encode('utf-8'), salt)
+    return hash_passw.decode('utf-8')
 
 
-def cadastrar_usuario(nome, senha):
-    conn = sqlite3.connect('cadastro.db')
+def register_user(name, passw):
+    conn = sqlite3.connect('register.db')
     cursor = conn.cursor()
 
-    hash_senha = gerar_hash_senha(senha)
+    hash_passw = create_password_hash(passw)
 
-    cursor.execute('INSERT INTO usuarios (nome, senha) VALUES (?, ?)', (nome, hash_senha))
+    cursor.execute('INSERT INTO user (name, passw) VALUES (?, ?)', (name, hash_passw))
 
     conn.commit()
     conn.close()
 
 
-def verificar_hash_senha(senha, hash_senha):
-    hash_bytes = hash_senha.encode('utf-8')
-    return bcrypt.checkpw(senha.encode('utf-8'), hash_bytes)
+def verifify_hash_passw(passw, hash_passw):
+    hash_bytes = hash_passw.encode('utf-8')
+    return bcrypt.checkpw(passw.encode('utf-8'), hash_bytes)
 
 
-def verificar_usuario(nome, senha):
-    conn = sqlite3.connect('cadastro.db')
+def verifify_user(name, passw):
+    conn = sqlite3.connect('register.db')
     cursor = conn.cursor()
 
-    cursor.execute('SELECT * FROM usuarios WHERE nome = ?', (nome,))
-    usuario = cursor.fetchone()
+    cursor.execute('SELECT * FROM user WHERE name = ?', (name,))
+    user = cursor.fetchone()
 
-    if usuario is not None:
-        hash_senha = usuario[2]
-        if verificar_hash_senha(senha, hash_senha):
+    if user is not None:
+        hash_passw = user[2]
+        if verifify_hash_passw(passw, hash_passw):
             return True
 
     conn.close()
@@ -65,29 +65,29 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/cadastrar', methods=['POST'])
-def cadastrar():
-    nome = request.form['nome']
-    senha = request.form['senha']
+@app.route('/register', methods=['POST'])
+def register():
+    name = request.form['name']
+    passw = request.form['passw']
 
-    if nome == '' or senha == '':
+    if name == '' or passw == '':
         return 'Por favor, preencha todos os campos.'
 
-    criar_tabela()
-    cadastrar_usuario(nome, senha)
+    create_table()
+    register_user(name, passw)
 
     return 'Usuário cadastrado com sucesso.'
 
 
-@app.route('/verificar', methods=['POST'])
-def verificar():
-    nome = request.form['nome']
-    senha = request.form['senha']
+@app.route('/verify', methods=['POST'])
+def verify():
+    name = request.form['name']
+    passw = request.form['passw']
 
-    if nome == '' or senha == '':
+    if name == '' or passw == '':
         return 'Por favor, preencha todos os campos.'
 
-    if verificar_usuario(nome, senha):
+    if verifify_user(name, passw):
         return 'Usuário válido.'
     else:
         return 'Usuário inválido.'

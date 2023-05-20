@@ -38,7 +38,7 @@ For now, for educational purposes, only a basic layout in html was developed.
 We are still in production.
 
 
-#Author
+# Author
 Michele Regina Bora
 https://www.linkedin.com/in/michele-regina-bora/
 

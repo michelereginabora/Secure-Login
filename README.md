@@ -21,7 +21,7 @@ In the usage example, the user enters the password, and a password hash is creat
 
 ### Interface
 For now, for educational purposes, only a basic layout in html was developed.
-
+![layout](assets/layout.png)
 
 # Technologies
 
@@ -31,15 +31,45 @@ For now, for educational purposes, only a basic layout in html was developed.
 - SQlite 3.35.5.
 - DB Browser for SQLite Version 3.12.2
 - IDE PyCharm 2022.3.1 (Community Edition)
-- 
+
 
 # How to run the project
  
-We are still in production.
+Make sure you have Python installed. 
+Also, install Pipenv if you don't already have it by running the following command:
+
+*pip install pipenv*
+
+<br/>
+
+1. Clone the repository:
+
+    *git clone: https://github.com/Micheleregina2022/cybersecurityProject.git*
+
+
+2. Navigate to the project directory:
+
+    *cd repository-name*
+
+
+3. Install project dependencies using Pipenv:
+
+    *pipenv install --dev*
+
+
+4. Activate the Pipenv virtual environment:
+
+    *pipenv shell*
+
+
+5. Run the application:
+
+    *python app.py*
+
 
 
 # Author
-Michele Regina Bora
+Michele Regina Bora <br/>
 https://www.linkedin.com/in/michele-regina-bora/
 
 

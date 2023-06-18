@@ -13,7 +13,11 @@
         <label for="senha">Senha:</label>
         <input type="password" id="senha" name="passw" required>
         <br><br>
+        <label for="telefone">Telefone:</label>
+        <input type="varchar" id="telefone" name="telephone" required>
+        <label for="register"></label>
         <input type="submit" value="Cadastrar">
+        <p>{{ message1 }}</p>
     </form>
 
   <h1>Verificação de Usuário</h1>
@@ -25,7 +29,11 @@
     <input type="password" id="senha" name="passw" required>
     <br><br>
     <input type="submit" value="Verificar">
+    <p>{{ message2 }}</p>
 </form>
+<form action="/verify_sms" method="post">
+        <button type="submit">Validar Telefone</button>
+    </form>
 
 </body>
 </html>

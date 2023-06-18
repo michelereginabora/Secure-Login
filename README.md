@@ -62,7 +62,12 @@ Also, install Pipenv if you don't already have it by running the following comma
     *pipenv shell*
 
 
-5. Run the application:
+5. Install dependencies:
+
+   *pip install -r requirements.txt*
+
+
+6. Run the application:
 
     *python app.py*
 

@@ -3,6 +3,11 @@
 <html>
 <head>
     <title>Cadastro de Usuário</title>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js"></script>
+
 </head>
 <body>
     <h1>Cadastro de Usuário</h1>
@@ -31,8 +36,16 @@
     <input type="submit" value="Verificar">
     <p>{{ message2 }}</p>
 </form>
-<form action="/verify_sms" method="post">
-        <button type="submit">Validar Telefone</button>
+    <form action="/verificationId" method="POST">
+        <label for="number_phone">Digite o número de telefone:</label> <br>
+        <input type="text" id="number_phone" name="number_phone" required> <br>
+        <input type="submit" value="Enviar Código de Verificação"></input> <br>
+        <p>{{ message3 }}</p>
+        <label for="VerificationId">Insira o código de verificação enviado para o seu telefone:</label> <br>
+        <input type="text" id="code" name="code">Digite o código:</input> <br>
+        <input type="submit" value="Enviar Código de Verificação"></input> <br>
+        <p>{{ message4 }}</p>
+
     </form>
 
 </body>

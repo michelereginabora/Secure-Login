@@ -7,6 +7,10 @@ from firebase_admin import auth
 
 
 app = Flask(__name__)
+app.secret_key = 'AIzaSyD4--MtRDEGmUG7AQ49rxFOwgCxsr6Ynuk'
+
+cred = credentials.Certificate('loginseguroapp-firebase-adminsdk-ouo6b-f7a7db78cc.json')
+firebase_admin.initialize_app(cred)
 
 
 def create_table():
@@ -99,11 +103,17 @@ def verify():
         return render_template('index.html', message2='Usuário inválido.')
 
 
-@app.route('/verify_sms', methods=['POST'])
-def verify_sms():
-    cred = credentials.Certificate("loginseguroapp-firebase-adminsdk-ouo6b-f7a7db78cc.json")
-    firebase_admin.initialize_app(cred)
-    return render_template('verify_sms.html')
+@app.route('/verificationId', methods=['POST'])
+def verificationId():
+    if request.headers['Content-Type'] == 'application/json':
+        verification_id = request.json.get('verificationId')
+        try:
+            user = auth.get_user_by_phone_number(verification_id)
+            return render_template('index.html', message3='Código verificado')
+        except:
+            return render_template('index.html', message4='Código errado')
+        else:
+            return jsonify({'error': 'Formato de conteúdo não suportado. Use application/json.'}), 415
 
 
 if __name__ == '__main__':

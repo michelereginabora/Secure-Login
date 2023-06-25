@@ -11,24 +11,46 @@ So this secure login system will involve much more than just encrypting password
 
 ## Examples
 
-The *create_table* function stores the information in the SQlite database.
+* create_table(): Creates a table in the SQLite database to store user information if the table doesn't exist.
 
-The *create_password_hash* function takes a password as input, generates a random salt using bcrypt, and then creates the password hash using the salt. The password hash is returned as a decoded string. The *register_user* function store the user in the database.
+* create_password_hash(passw): Generates an encrypted password hash using the bcrypt library.
 
-The *verify_password* function takes a password and a password hash as input. It decodes the password hash, checks if the password matches the hash, and returns a boolean value indicating whether the password is correct or not.
+* register_user(name, passw, number_phone): Registers a new user in the database, storing the name, encrypted password, and phone number.
 
-In the usage example, the user enters the password, and a password hash is created using the *create_password_hash* function. Then, the program simulates a new login attempt, where the user enters the password again. The *verify_password* function is used to check if the password matches the previously created hash, and a message is displayed indicating whether the login was successful or failed.
+* verify_hash_passw(passw, hash_passw): Verifies if a password matches an encrypted password hash.
+
+* verify_user(name, passw): Verifies if the provided username and password correspond to a registered user in the database.
+
+* create_verify_service(): Creates a verification service using the Twilio API and returns the service_sid for the created service.
+
+* send_verification_sms(number_phone): Sends a verification request via SMS to the provided phone number using the Twilio verification service.
+
+Flask Routes:
+
+* /: Initial route that renders the index.html template.
+
+* /register: Route for registering a new user. Form data is extracted and validated before calling the register_user function to insert the user details into the database.
+
+* /verify: Route for authenticating a user. Form data is extracted and verified by calling the verify_user function. If the authentication is successful, a success message is rendered; otherwise, a failure message is displayed.
+
+* /twofactor: Route for performing two-factor authentication (2FA). The phone number and OTP code are extracted from the form.
+The send_verification_sms function is called to send the verification request via SMS. 
+Then, the provided OTP code is verified, and a message indicating whether the verification was approved or failed is rendered.
+
+#### *note: project under development and resolving problems in production*
+
 
 ### Interface
-For now, for educational purposes, only a basic layout in html was developed.
+A simple visualization, because the focus is on the backend. <br/>
 ![layout](assets/layout.png)
 
 # Technologies
 
 - Python 3.9.11
-- Librarys Python: sqlite3, bcrypt, 
+- Librarys Python: sqlite3, bcrypt, flask.render_template, twilio.rest.Client, requests.
 - Framework Flask 2.3.2
 - SQlite 3.35.5.
+- API Twilio
 - DB Browser for SQLite Version 3.12.2
 - IDE PyCharm 2022.3.1 (Community Edition)
 
@@ -70,6 +92,43 @@ Also, install Pipenv if you don't already have it by running the following comma
 6. Run the application:
 
     *python app.py*
+
+## Using the API and Testing the Project
+
+To use the API and test the project, please follow the instructions below:
+
+1. Twilio Account Setup:
+
+If you haven't already, create a Twilio account at Twilio.com (it's free!).
+Retrieve your Account SID and Auth Token from the Twilio dashboard. 
+
+2. Environment Setup:
+
+Open the app.py file in a text editor.
+
+Replace the values of the account_sid, auth_token, and service_sid variables with your Twilio account information.
+
+Open the terminal and navigate to the project folder.
+
+Start the server by running the following command:
+
+ *python app.py*
+
+The server will run on port 5000.
+
+3. Using the Project:
+
+Open your web browser and visit http://localhost:5000 to access the project's home page.
+
+You will see fields for registration and login.
+
+To test the two-factor verification, enter your phone number and the OTP (verification code) received via SMS. 
+
+Based on the verification, you will receive a message indicating whether access is granted or denied.
+
+
+
+
 
 
 

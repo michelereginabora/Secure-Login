@@ -2,50 +2,55 @@
 <!--suppress ALL -->
 <html>
 <head>
-    <title>Cadastro de Usuário</title>
+    <title>Secure Login</title>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
      <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js"></script>
 
 </head>
-<body>
-    <h1>Cadastro de Usuário</h1>
+<body style='text-align: center'>
+    <h1>User register</h1>
     <form action="/register" method="POST">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="name" required>
+        <label for="nome">Name:</label>
+        <input type="text" id="name" name="name" required>
         <br><br>
-        <label for="senha">Senha:</label>
-        <input type="password" id="senha" name="passw" required>
+        <label for="passw">Password:</label>
+        <input type="password" id="passw" name="passw" required>
         <br><br>
-        <label for="telefone">Telefone:</label>
-        <input type="varchar" id="telefone" name="telephone" required>
+        <label for="phone_number">Phone:</label>
+        <input type="varchar" id="phone_number" name="phone_number" required>
+        <br><br>
         <label for="register"></label>
-        <input type="submit" value="Cadastrar">
+        <input type="submit" value="Register">
         <p>{{ message1 }}</p>
     </form>
 
-  <h1>Verificação de Usuário</h1>
+  <h1>User verification</h1>
 <form action="/verify" method="POST">
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="name" required>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
     <br><br>
-    <label for="senha">Senha:</label>
-    <input type="password" id="senha" name="passw" required>
+    <label for="passw">senha:</label>
+    <input type="password" id="passw" name="passw" required>
     <br><br>
-    <input type="submit" value="Verificar">
+    <input type="submit" value="Send">
     <p>{{ message2 }}</p>
 </form>
-    <form action="/verificationId" method="POST">
-        <label for="number_phone">Digite o número de telefone:</label> <br>
-        <input type="text" id="number_phone" name="number_phone" required> <br>
-        <input type="submit" value="Enviar Código de Verificação"></input> <br>
-        <p>{{ message3 }}</p>
-        <label for="VerificationId">Insira o código de verificação enviado para o seu telefone:</label> <br>
-        <input type="text" id="code" name="code">Digite o código:</input> <br>
-        <input type="submit" value="Enviar Código de Verificação"></input> <br>
-        <p>{{ message4 }}</p>
 
+    <h1>Two Factor Authentication </h1>
+    <form action="/twofactor" method="POST">
+        <label for="number_phone">Phone:</label>
+        <input type="text" id="number_phone" name="number_phone" required>
+        <br><br>
+        <input type="submit" value="Send Code">
+        <p>{{ message2 }}</p>
+        <label for="otp_code">OTP code:</label>
+        <br>
+        <input type="text" id="otp_code" name="otp_code" required>
+        <br><br>
+        <input type="submit" value="Verify Code">
+        <p>{{ message2 }}</p>
     </form>
 
 </body>

@@ -6,8 +6,9 @@
 
 # About project 
 
-This project consists of a secure login system developed in Python. So far, the basic structure of registration and verification of name and password has been developed. The security consists of encryption through the _bcrypt_, data encryption library. In the future, together with this authentication system, a financial transaction system will be developed.
-So this secure login system will involve much more than just encrypting passwords. Additional security measures will be implemented, such as protection against brute force attacks, use of HTTPS, two-factor authentication, among others related to financial transactions.
+This project consists of a secure login system developed in Python. So far, the basic structure of registration and name and password verification has been developed. The first security mechanism consists of encrypting passwords using _bcrypt_, a data encryption library.
+Then two-factor authentication (2FA) was implemented.
+
 
 ## Examples
 

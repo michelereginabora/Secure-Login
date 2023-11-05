@@ -47,25 +47,25 @@ def register_user(name, passw, number_phone):
     conn.close()
 
 
-def verifify_hash_passw(passw, hash_passw):
-    hash_bytes = hash_passw.encode('utf-8')
-    return bcrypt.checkpw(passw.encode('utf-8'), hash_bytes)
+def verify_hash_passw(passw, hash_passw):
+    return bcrypt.checkpw(passw.encode('utf-8'), hash_passw.encode('utf-8'))
 
 
-def verifify_user(name, passw):
+def verify_user(name, passw):
     conn = sqlite3.connect('register.db')
     cursor = conn.cursor()
 
-    cursor.execute('SELECT verification_code FROM user WHERE name = ?', (name,))
+    cursor.execute('SELECT passw FROM user WHERE name = ?', (name,))
     user = cursor.fetchone()
 
-    if user is not None:
-        hash_passw = user[2]
-        if verifify_hash_passw(passw, hash_passw):
-            return True
-
     conn.close()
-    return False
+
+    if user is not None:
+        hash_passw = user[0]
+        if verify_hash_passw(passw, hash_passw):
+            return True  # Retorna True se a senha estiver correta
+    
+    return False  # Retorna False se o usuário não for encontrado ou a senha estiver incorreta
 
 
 def create_verify_service():
@@ -99,7 +99,7 @@ def index():
 def register():
     name = request.form['name']
     passw = request.form['passw']
-    number_phone = request.form["number_phone"]
+    number_phone = request.form.get("number_phone", None)
 
     if name == '' or passw == '' or number_phone == "":
         return 'Por favor, preencha todos os campos.'
@@ -115,12 +115,17 @@ def verify():
     name = request.form['name']
     passw = request.form['passw']
 
-    if name == '' or passw == '':
-        return 'Preencha todos os campos'
+    print(f'Nome recebido: {name}')  # Mensagem de depuração para verificar o nome recebido do formulário
+    print(f'Senha recebida: {passw}')  # Mensagem de depuração para verificar a senha recebida do formulário
 
-    if verifify_user(name, passw):
+    if name == '' or passw == '':
+        return 'Preencha todos os campos' 
+
+    if verify_user(name, passw):
+        print('Usuário válido.')  # Mensagem de depuração para verificar se o usuário foi validado com sucesso
         return render_template('index.html', message2='Usuário válido.')
     else:
+        print('Não encontrado.')  # Mensagem de depuração para verificar se o usuário foi considerado inválido
         return render_template('index.html', message2='Usuário inválido.')
 
 
